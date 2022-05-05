@@ -11,27 +11,39 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var bubbleImageView: UIImageView!
-    
-
-    @IBOutlet weak var bubbleHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var labelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bubbleView: UIView!
     @IBOutlet weak var bubbleViewHeightConstraint: NSLayoutConstraint!
     
+    let text = "Et tenetur libero omnis. Qui voluptas mollitia sit modi rerum. Quos doloremque tempora eum. Quia dicta et illum velit esse. Quia dicta quam culpa occaecati aut impedit rerum non. Dicta laborum rerum sunt quis eligendi et harum est. Reprehenderit illum et ut quia. Deserunt totam cupiditate placeat quisquam ipsa consequatur voluptatibus. Culpa deleniti quisquam provident et dolore nesciunt aut qui. Quo laborum alias qui asperiores sit. Qui nobis ratione mollitia assumenda."
+    let labelHorizontalPadding: CGFloat = 12.0
+    let labelVerticalPadding: CGFloat = 8.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let text = "Et tenetur libero omnis. Qui voluptas mollitia sit modi rerum. Quos doloremque tempora eum. Quia dicta et illum velit esse. Quia dicta quam culpa occaecati aut impedit rerum non. Dicta laborum rerum sunt quis eligendi et harum est. Reprehenderit illum et ut quia. Deserunt totam cupiditate placeat quisquam ipsa consequatur voluptatibus. Culpa deleniti quisquam provident et dolore nesciunt aut qui. Quo laborum alias qui asperiores sit. Qui nobis ratione mollitia assumenda."
-        let height = label.heightForView(text: text, width: 315)
+        setup(label: self.label, with: self.text)
+        
+        setup(
+            height: self.bubbleViewHeightConstraint,
+            for: self.bubbleView,
+            dependingOn: self.label
+        )
+        
+        changeImage("chat_bubble_sent")
+    }
+    
+    func setup(label: UILabel, with text: String) -> Void {
         label.text = text
-        bubbleViewHeightConstraint.constant = height + 16
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
-        
-        changeImage("chat_bubble_sent")
-//        bubbleImageView.tintColor = UIColor(named: "chat_bubble_color_sent")
+    }
+    
+    func setup(height constraint: NSLayoutConstraint, for view: UIView, dependingOn heightElement: UILabel) -> Void {
+        // kind of hacky to reduce it with the padding, but it works. Because the height isn't properly set yet.
+        let labelWidth = view.bounds.width - labelHorizontalPadding * 2
+        let labelHeight = heightElement.heightForView(text: text, width: labelWidth)
+        constraint.constant = labelHeight + labelVerticalPadding * 2
     }
     
 
