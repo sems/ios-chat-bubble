@@ -15,14 +15,37 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var bubbleHeight: UILabel!
     @IBOutlet weak var bubbleHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var labelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bubbleView: UIView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let text = "This is just a load of text. This is just a load of text. This is just a load of text. This is just a load of text."
+        let height = label.heightForView(text: text, width: 200)
+        label.text = text
+        labelHeightConstraint.constant = height
+        bubbleHeightConstraint.constant = height
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.sizeToFit()
+        
+        changeImage("chat_bubble_sent")
+        bubbleImageView.tintColor = UIColor(named: "chat_bubble_color_sent")
+//        bubbleView.constraints.constant = height
+//        let heightConstraint = bubbleView.heightAnchor.constraint(equalToConstant: height)
+//        bubbleView.addConstraint(heightConstraint)
     }
     
     @IBAction func sliderChanged(_ sender: UISlider) {
         bubbleHeight.text = "\(sender.value)"
-        bubbleHeightConstraint.constant = CGFloat(sender.value)
+//        bubbleHeightConstraint.constant = self.getLabelHeight()
+//        bubbleViewHeightConstraint.constant = CGFloat(sender.value)
+    }
+    
+    func getLabelHeight() -> CGFloat {
+        return label.bounds.size.height
     }
 
     @IBAction func sentButtonTapped(_ sender: UIButton) {
@@ -46,5 +69,17 @@ class ViewController: UIViewController {
     
     @IBAction func colorButtonTapped(_ sender: UIButton) {
         bubbleImageView.tintColor = sender.backgroundColor
+    }
+}
+
+extension UILabel {
+    func heightForView(text:String, width:CGFloat) -> CGFloat{
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+     label.numberOfLines = 0
+     label.lineBreakMode = NSLineBreakMode.byWordWrapping
+     label.text = text
+
+     label.sizeToFit()
+     return label.frame.height
     }
 }
