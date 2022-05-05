@@ -10,10 +10,9 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var bubbleImageView: UIImageView!
     
-    @IBOutlet weak var bubbleHeight: UILabel!
+
     @IBOutlet weak var bubbleHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var labelHeightConstraint: NSLayoutConstraint!
@@ -23,24 +22,19 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let text = "This is just a load of text. This is just a load of text. This is just a load of text. This is just a load of text."
-        let height = label.heightForView(text: text, width: 323)
+        let text = "Et tenetur libero omnis. Qui voluptas mollitia sit modi rerum. Quos doloremque tempora eum. Quia dicta et illum velit esse. Quia dicta quam culpa occaecati aut impedit rerum non. Dicta laborum rerum sunt quis eligendi et harum est. Reprehenderit illum et ut quia. Deserunt totam cupiditate placeat quisquam ipsa consequatur voluptatibus. Culpa deleniti quisquam provident et dolore nesciunt aut qui. Quo laborum alias qui asperiores sit. Qui nobis ratione mollitia assumenda."
+        let height = label.heightForView(text: text, width: 315)
         label.text = text
-        labelHeightConstraint.constant = height
-        bubbleHeightConstraint.constant = height + 8
-        bubbleViewHeightConstraint.constant = height
+        bubbleViewHeightConstraint.constant = height + 16
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.lineBreakMode = .byWordWrapping
         label.sizeToFit()
         
         changeImage("chat_bubble_sent")
-        bubbleImageView.tintColor = UIColor(named: "chat_bubble_color_sent")
+//        bubbleImageView.tintColor = UIColor(named: "chat_bubble_color_sent")
     }
     
-    @IBAction func sliderChanged(_ sender: UISlider) {
-        bubbleHeight.text = "\(sender.value)"
-    }
-    
+
     func getLabelHeight() -> CGFloat {
         return label.bounds.size.height
     }
