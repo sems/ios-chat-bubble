@@ -18,30 +18,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var labelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bubbleView: UIView!
-
+    @IBOutlet weak var bubbleViewHeightConstraint: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let text = "This is just a load of text. This is just a load of text. This is just a load of text. This is just a load of text."
-        let height = label.heightForView(text: text, width: 200)
+        let height = label.heightForView(text: text, width: 323)
         label.text = text
         labelHeightConstraint.constant = height
-        bubbleHeightConstraint.constant = height
+        bubbleHeightConstraint.constant = height + 8
+        bubbleViewHeightConstraint.constant = height
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.sizeToFit()
         
         changeImage("chat_bubble_sent")
         bubbleImageView.tintColor = UIColor(named: "chat_bubble_color_sent")
-//        bubbleView.constraints.constant = height
-//        let heightConstraint = bubbleView.heightAnchor.constraint(equalToConstant: height)
-//        bubbleView.addConstraint(heightConstraint)
     }
     
     @IBAction func sliderChanged(_ sender: UISlider) {
         bubbleHeight.text = "\(sender.value)"
-//        bubbleHeightConstraint.constant = self.getLabelHeight()
-//        bubbleViewHeightConstraint.constant = CGFloat(sender.value)
     }
     
     func getLabelHeight() -> CGFloat {
